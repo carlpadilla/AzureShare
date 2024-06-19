@@ -63,7 +63,7 @@ function generateSasUrl(blockBlobClient, accountName, accountKey, expirationTime
         containerName: blockBlobClient.containerName,
         blobName: blockBlobClient.name,
         permissions: BlobSASPermissions.parse('r'), // Grant read permissions
-        startsOn: new Date(),
+        startsOn: new Date(new Date().valueOf() - 5 * 60 * 1000), // Set the start time to 5 minutes in the past
         expiresOn: new Date(new Date().valueOf() + expirationTime * 3600 * 1000) // Link valid for specified hours
     };
 

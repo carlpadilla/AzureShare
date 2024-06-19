@@ -27,16 +27,24 @@ function App() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setResult(`File uploaded. Share this link: ${response.data.url}`);
+      setResult(response.data.url);
+      e.target.reset(); // Clear the input field
+      setFile(null); // Clear the file state
     } catch (error) {
       console.error('Error uploading file', error);
       setResult('Error uploading file');
     }
   };
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(result).then(() => {
+      alert('Link copied to clipboard');
+    });
+  };
+
   return (
     <div className="container">
-      <h1>ShareSafely - File Upload</h1>
+      <h1>AzureShare - File Upload</h1>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleFileChange} required />
         <label>
@@ -52,7 +60,12 @@ function App() {
         </label>
         <button type="submit">Upload</button>
       </form>
-      <div id="result">{result}</div>
+      {result && (
+        <div id="result">
+          File uploaded. Share this link: <a href={result} target="_blank" rel="noopener noreferrer">{result}</a>
+          <button onClick={copyToClipboard}>Copy to Clipboard</button>
+        </div>
+      )}
     </div>
   );
 }

@@ -36,6 +36,7 @@ Before you begin, ensure you have the following installed on your local machine:
    - **Performance:** Standard.
    - **Replication:** LRS (Locally-redundant storage) for development purposes, adjust based on your needs.
 4. Click "Review + create" and then "Create".
+![alt text](image.png)
 
 #### b. Create a Blob Container
 
@@ -44,10 +45,11 @@ Before you begin, ensure you have the following installed on your local machine:
 3. Click "+ Container" to create a new container.
 4. Provide a name (e.g., `uploads`) and set the Public access level to "Private (no anonymous access)".
 5. Click "Create".
+![alt text](image-1.png)
 
 #### c. Configure Security Settings
 
-1. In the storage account, go to "Encryption" under "Settings".
+1. In the storage account, go to "Encryption" under "Security + networking".
 2. Ensure that encryption is enabled (it should be by default).
 
 ### 2. Backend Setup
@@ -93,6 +95,8 @@ Before you begin, ensure you have the following installed on your local machine:
    ```sh
    npm start
    ```
+
+![alt text](image-2.png)
 
 ### 4. Deploying to Azure Web Apps
 
