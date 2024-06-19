@@ -22,7 +22,35 @@ Before you begin, ensure you have the following installed on your local machine:
 
 ## Getting Started
 
-### Backend Setup
+### 1. Set Up Azure Resources
+
+#### a. Create an Azure Storage Account
+
+1. Go to the [Azure Portal](https://portal.azure.com).
+2. Click on "Create a resource" and select "Storage account".
+3. Fill in the required details:
+   - **Subscription:** Select your subscription.
+   - **Resource Group:** Create a new resource group or select an existing one.
+   - **Storage account name:** Provide a unique name.
+   - **Region:** Choose a region close to your users.
+   - **Performance:** Standard.
+   - **Replication:** LRS (Locally-redundant storage) for development purposes, adjust based on your needs.
+4. Click "Review + create" and then "Create".
+
+#### b. Create a Blob Container
+
+1. Once the storage account is created, navigate to it.
+2. In the left menu, under "Data storage," click on "Containers".
+3. Click "+ Container" to create a new container.
+4. Provide a name (e.g., `uploads`) and set the Public access level to "Private (no anonymous access)".
+5. Click "Create".
+
+#### c. Configure Security Settings
+
+1. In the storage account, go to "Encryption" under "Settings".
+2. Ensure that encryption is enabled (it should be by default).
+
+### 2. Backend Setup
 
 1. **Clone the repository:**
    ```sh
@@ -49,11 +77,11 @@ Before you begin, ensure you have the following installed on your local machine:
    node server.js
    ```
 
-### Frontend Setup
+### 3. Frontend Setup
 
 1. **Navigate to the frontend directory:**
    ```sh
-   cd ../share-safely
+   cd ../azure-share
    ```
 
 2. **Install dependencies:**
@@ -66,30 +94,41 @@ Before you begin, ensure you have the following installed on your local machine:
    npm start
    ```
 
-### Running the Application Locally
+### 4. Deploying to Azure Web Apps
 
-- The backend server should be running on `http://localhost:3001`.
-- The frontend React app should be running on `http://localhost:3000`.
-
-### Deploying to Azure Web Apps
+#### a. Build the React App
 
 1. **Build the React app:**
    ```sh
    npm run build
    ```
 
-2. **Deploy the backend and frontend to Azure:**
-   - Ensure you have the Azure CLI installed and logged in.
-   - Use the following command to deploy:
-     ```sh
-     az webapp up --name <Your-Web-App-Name> --resource-group <Your-Resource-Group-Name> --plan <Your-App-Service-Plan-Name>
-     ```
+#### b. Deploy the Backend and Frontend to Azure
 
-3. **Update the backend CORS settings to allow requests from your deployed React app domain.**
+1. Ensure you have the Azure CLI installed and logged in.
+2. Deploy the backend:
+   ```sh
+   cd backend
+   az webapp up --name <Your-Backend-Web-App-Name> --resource-group <Your-Resource-Group-Name> --plan <Your-App-Service-Plan-Name>
+   ```
 
-4. **Configure environment variables in Azure for both the frontend and backend applications.**
+3. Deploy the frontend:
+   ```sh
+   cd ../azure-share
+   az webapp up --name <Your-Frontend-Web-App-Name> --resource-group <Your-Resource-Group-Name> --plan <Your-App-Service-Plan-Name>
+   ```
 
-## Project Structure
+#### c. Update Backend CORS Settings
+
+Ensure your backend `server.js` allows requests from your deployed React app domain. Update the CORS settings accordingly.
+
+#### d. Configure Environment Variables in Azure
+
+1. Navigate to your Azure Web App in the Azure Portal.
+2. Go to "Configuration" under "Settings".
+3. Add the environment variables listed in your `.env` file for both backend and frontend applications.
+
+### Project Structure
 
 ```
 project-root/
@@ -109,7 +148,7 @@ project-root/
 │   └── README.md
 ```
 
-## Acknowledgments
+### Acknowledgments
 
 - **Node.js**: For the backend server.
 - **Express**: For simplifying the server setup.
@@ -119,7 +158,7 @@ project-root/
 - **React**: For the frontend application.
 - **Axios**: For making HTTP requests from the frontend.
 
-## Contact
+### Contact
 
 If you have any questions or need further assistance, feel free to reach out!
 
